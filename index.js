@@ -31,5 +31,13 @@ async function bitfinex () {
   await report({ source, time, bid, ask })
 }
 
+async function coinbase () {
+  const { data } = JSON.parse(await request.get('https://api.coinbase.com/v2/prices/spot?currency=USD'))
+  const source = 'coinbase'
+  const time = new Date()
+  await report({ source, time, bid: data.amount })
+}
+
 setInterval(bx, 1000)
 setInterval(bitfinex, 1000)
+setInterval(coinbase, 1000)
